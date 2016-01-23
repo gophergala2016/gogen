@@ -8,6 +8,25 @@ import (
 	"strings"
 )
 
+// Generator interface provides interface definition
+// for any generator that can be used within flowgen
+type Generator interface {
+	// Generate is entry point to the generator. This
+	// method is called only once, when the generator
+	// is invoked
+	Generate() error
+	// Name returns the name of the generator. This
+	// method should only be used for the debugging
+	// purposes, as there may be duplicit community
+	// generators with the same name.
+	Name() string
+	// SetOutputDir will change the output directory
+	// from the default to the given. This is strongly
+	// recommended every time user something wants to
+	// generate.
+	SetOutputDir(dir string)
+}
+
 // GeneratorContext is base class that should be used
 // as a composite to any other created generator context.
 // It supports basic data flow and provides helpers.

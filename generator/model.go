@@ -1,6 +1,11 @@
 package generator
 
-import "github.com/gophergala2016/gogen"
+import (
+	"os"
+	"text/template"
+
+	"github.com/gophergala2016/gogen"
+)
 
 var (
 	// Model is global registration of the generator
@@ -21,6 +26,15 @@ func (g *ModelGenerator) Generate() error {
 		return err
 	}
 
+	tmpl, err := template.New("model").Parse(modelTemplate)
+	if err != nil {
+		return err
+	}
+
+	for _, model := range gogen.Models {
+		tmpl.Execute(os.Stdout, model)
+	}
+
 	return nil
 }
 
@@ -28,7 +42,7 @@ func (g *ModelGenerator) Generate() error {
 var (
 	modelTemplate = `
   type {{.Name}} struct {
-    {{range .Fields}}{{.Name}} {{.Type.Name}}{{end}}
-  }
-  `
+    {{range .Fields}}{{.Name}} {{.Type.Name}}
+    {{end}}
+  }`
 )

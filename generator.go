@@ -67,6 +67,10 @@ func (g *GeneratorContext) PackageName() string {
 func (g *GeneratorContext) Prepare() error {
 	var err error
 
+	if g.OutputDir == "" {
+		g.SetOutputDir(".")
+	}
+
 	// create directories that are needed
 	err = os.MkdirAll(g.OutputDir, os.ModePerm)
 	if err != nil {

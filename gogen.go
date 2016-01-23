@@ -37,7 +37,7 @@ func Pipe(gens ...Generator) {
 }
 
 // Generate will startup a
-func Generate() {
+func Generate() error {
 	wg := sync.WaitGroup{}
 
 	for _, pipe := range Pipes {
@@ -56,4 +56,6 @@ func Generate() {
 	}
 
 	wg.Wait()
+
+	return nil
 }

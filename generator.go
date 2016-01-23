@@ -9,7 +9,7 @@ import (
 )
 
 // Generator interface provides interface definition
-// for any generator that can be used within flowgen
+// for any generator that can be used within gogen
 type Generator interface {
 	// Generate is entry point to the generator. This
 	// method is called only once, when the generator

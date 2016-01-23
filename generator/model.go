@@ -1,7 +1,7 @@
 package generator
 
 import (
-	"os"
+	"bytes"
 	"text/template"
 
 	"github.com/gophergala2016/gogen"
@@ -26,13 +26,23 @@ func (g *ModelGenerator) Generate() error {
 		return err
 	}
 
+	// compile package template
+	packTmpl, err := template.New("package").Parse(packageTemplate)
+	if err != nil {
+		return err
+	}
+
+	// compile model template
 	tmpl, err := template.New("model").Parse(modelTemplate)
 	if err != nil {
 		return err
 	}
 
 	for _, model := range gogen.Models {
-		tmpl.Execute(os.Stdout, model)
+		content := bytes.Buffer{}
+		packTmpl.Execute(&content, g)
+		tmpl.Execute(&content, model)
+		g.SaveFile(model.Name, content)
 	}
 
 	return nil
@@ -40,9 +50,12 @@ func (g *ModelGenerator) Generate() error {
 
 // Templates
 var (
+	packageTemplate = `package {{.PackageName}}`
+
 	modelTemplate = `
-  type {{.Name}} struct {
-    {{range .Fields}}{{.Name}} {{.Type.Name}}
-    {{end}}
-  }`
+
+type {{.Name}} struct {
+  {{range .Fields}}{{.Name}} {{.Type.Name}}
+  {{end}}
+}`
 )

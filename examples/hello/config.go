@@ -11,6 +11,9 @@ func main() {
 	// generators.
 	gogen.Define(model.User)
 
+	// set output for the generator
+	generator.Model.SetOutputDir("./model")
+
 	// Define pipes that should be run
 	gogen.Pipe(
 		generator.Model,

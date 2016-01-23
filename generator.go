@@ -67,6 +67,7 @@ func (g *GeneratorContext) PackageName() string {
 func (g *GeneratorContext) Prepare() error {
 	var err error
 
+	// if no output dir was
 	if g.OutputDir == "" {
 		g.SetOutputDir(".")
 	}

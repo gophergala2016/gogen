@@ -58,6 +58,14 @@ func (g *GeneratorContext) Name() string {
 func (g *GeneratorContext) PackageName() string {
 	// get package chain from the output dir
 	packChain := strings.Split(g.OutputDir, "/")
+
+	if len(packChain) == 0 || packChain[len(packChain)-1] == "." {
+		// return current working dir
+		wd, _ := os.Getwd()
+		pack := strings.Split(wd, "/")
+		return pack[len(pack)-1]
+	}
+
 	// get the package (last in the chain)
 	return packChain[len(packChain)-1]
 }

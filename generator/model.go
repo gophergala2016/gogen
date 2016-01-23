@@ -16,5 +16,19 @@ type ModelGenerator struct {
 // Generate will call the generator to generate
 // results
 func (g *ModelGenerator) Generate() error {
+	err := g.Prepare()
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
+
+// Templates
+var (
+	modelTemplate = `
+  type {{.Name}} struct {
+    {{range .Fields}}{{.Name}} {{.Type.Name}}{{end}}
+  }
+  `
+)

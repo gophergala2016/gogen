@@ -28,6 +28,11 @@ type RepositoryGenerator struct {
 	repositoryType int
 }
 
+// Name returns name of the generator
+func (g *RepositoryGenerator) Name() string {
+	return "RepositoryGenerator"
+}
+
 // SetRepositoryType will set the type of the generated
 // repository. Defaults to Mongo
 func (g *RepositoryGenerator) SetRepositoryType(t int) {
@@ -57,6 +62,7 @@ func (g *RepositoryGenerator) Generate() error {
 
 	for _, resource := range *g.Resources {
 		if model, ok := resource.(*gogen.Model); ok {
+			genlog.Info("Generating repository for model %s", model.Name)
 			content := bytes.Buffer{}
 			repoTmpl.Execute(&content,
 				struct {

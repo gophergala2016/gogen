@@ -53,9 +53,9 @@ var (
 	packageTemplate = `package {{.PackageName}}`
 
 	modelTemplate = `
-
-type {{.Name}} struct {
-  {{range .Fields}}{{.Name}} {{.Type.Name}}
-  {{end}}
-}`
+		//  {{.Name}} is model representing the entity
+		type {{.Name}} struct {
+		  {{range .Fields}}{{.Name}} {{.Type.Name}}
+		  {{end}}
+		}`
 )

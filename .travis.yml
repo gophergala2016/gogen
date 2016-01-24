@@ -2,7 +2,6 @@ language: go
 go:
   - 1.5
 install:
-  - "go get -v"
-  - "go get -v ./..."
+  - "go get ./..."
 script:
   - "go test -v -race ./..."

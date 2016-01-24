@@ -13,7 +13,6 @@ type ResourceSuite struct {
 
 func (s *ResourceSuite) SetupTest() {}
 
-
 func (s *ResourceSuite) TestResourceAdd() {
 	rc := ResourceContainer{}
 	rc.Add(42)
@@ -23,9 +22,6 @@ func (s *ResourceSuite) TestResourceAdd() {
 	assert.Equal(s.T(), "wololo", rc[2])
 }
 
-
 func TestResourceSuite(t *testing.T) {
 	suite.Run(t, &ResourceSuite{})
 }
-
-

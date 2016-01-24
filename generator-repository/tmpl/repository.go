@@ -5,49 +5,49 @@ var (
 	MongoRepositoryTemplate = `
 	package {{.PackageName}}
 
-  type {{.Name}}Repository struct {
+  type {{.Model.Name}}Repository struct {
   	*mgo.Collection
   }
 
-  func New{{.Name}}Repository(col *mgo.Collection) *{{.Name}}Repository {
-  	return &{{.Name}}Repository{Collection: col}
+  func New{{.Model.Name}}Repository(col *mgo.Collection) *{{.Model.Name}}Repository {
+  	return &{{.Model.Name}}Repository{Collection: col}
   }
 
-  func (repo *{{.Name}}Repository) Create(model *{{.Name}}Model) (error) {
+  func (repo *{{.Model.Name}}Repository) Create(model *{{.Model.ImportName}}) (error) {
   	return repo.Insert(model)
   }
 
-  func (repo *{{.Name}}Repository) Read(selection *{{.Name}}Model) ([]{{.Name}}Model, error) {
-  	models := []{{.Name}}Model{}
+  func (repo *{{.Model.Name}}Repository) Read(selection *{{.Model.ImportName}}) ([]{{.Model.ImportName}}, error) {
+  	models := []{{.Model.ImportName}}{}
 
   	return models, repo.Find(selection).All(&models)
   }
 
-  func (repo *{{.Name}}Repository) ReadOne(selection *{{.Name}}Model) (*{{.Name}}Model, error) {
-  	model := &{{.Name}}Model{}
+  func (repo *{{.Model.Name}}Repository) ReadOne(selection *{{.Model.ImportName}}) (*{{.Model.ImportName}}, error) {
+  	model := &{{.Model.ImportName}}{}
 
   	return model, repo.Find(selection).One(model)
   }
 
-  func (repo *{{.Name}}Repository) ReadID(id bson.ObjectId) (*{{.Name}}Model, error) {
-  	model := &{{.Name}}Model{}
+  func (repo *{{.Model.Name}}Repository) ReadID(id bson.ObjectId) (*{{.Model.ImportName}}, error) {
+  	model := &{{.Model.ImportName}}{}
 
   	return model, repo.FindId(id).One(model)
   }
 
-  func (repo *{{.Name}}Repository) Update(selection *{{.Name}}Model, update *{{.Name}}Model) (error) {
+  func (repo *{{.Model.Name}}Repository) Update(selection *{{.Model.ImportName}}, update *{{.Model.ImportName}}) (error) {
   	return repo.Update(selection, update)
   }
 
-  func (repo *{{.Name}}Repository) UpdateID(update *{{.Name}}Model) (error) {
+  func (repo *{{.Model.Name}}Repository) UpdateID(update *{{.Model.ImportName}}) (error) {
   	return repo.UpdateId(update.ID, update)
   }
 
-  func (repo *{{.Name}}Repository) Delete(selection *{{.Name}}Model) (error) {
+  func (repo *{{.Model.Name}}Repository) Delete(selection *{{.Model.ImportName}}) (error) {
   	return repo.Remove(selection)
   }
 
-  func (repo *{{.Name}}Repository) DeleteID(id bson.ObjectId) (error) {
+  func (repo *{{.Model.Name}}Repository) DeleteID(id bson.ObjectId) (error) {
   	return repo.RemoveId(id)
   }`
 )

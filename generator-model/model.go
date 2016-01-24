@@ -22,6 +22,10 @@ type Model struct {
 	// Restrictions array defines a number of restrictions
 	// that should be used while generating the model
 	Restrictions []Restriction
+	// Package into which model is saved
+	Package string
+	// ImportPath is the full path for the import
+	ImportPath string
 }
 
 // AddField extends fields definition by the provided fields.
@@ -73,6 +77,11 @@ func (m *Model) Extend(by *Model) *Model {
 	}
 
 	return by
+}
+
+// ImportName returns name of the model with the import
+func (m *Model) ImportName() string {
+	return m.Package + "." + m.Name
 }
 
 // Field defines model field. Every field may define

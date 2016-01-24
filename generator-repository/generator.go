@@ -19,9 +19,9 @@ var (
 
 // Repository types that can be used
 const (
-	MongoRepository = iota
-	PostgresRepository
-	RedisRepository
+	Mongo = iota
+	Postgres
+	Redis
 )
 
 // generator encapsulates the logic behind
@@ -54,7 +54,7 @@ func (g *generator) Generate() error {
 	// temporary template variable
 	var templ string
 	switch g.repositoryType {
-	case MongoRepository:
+	case Mongo:
 		templ = repositorytmpl.MongoRepositoryTemplate
 	}
 
@@ -68,15 +68,18 @@ func (g *generator) Generate() error {
 		if entity, ok := resource.(*model.Model); ok {
 			genlog.Info("Generating repository for model %s", entity.Name)
 			content := bytes.Buffer{}
-			repoTmpl.Execute(&content,
+			err = repoTmpl.Execute(&content,
 				struct {
-					*model.Model
+					Model       *model.Model
 					PackageName string
 				}{
 					Model:       entity,
 					PackageName: g.PackageName(),
 				},
 			)
+			if err != nil {
+				return err
+			}
 			g.SaveFile(entity.Name+"Repository", content)
 		}
 	}

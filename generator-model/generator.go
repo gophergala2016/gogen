@@ -15,10 +15,18 @@ var (
 	genlog = logging.MustGetLogger("gogen")
 )
 
+// Types of models
+const (
+	Default = iota
+	Mongo
+)
+
 // ModelGenerator encapsulates the logic behind
 // generating of models
 type generator struct {
 	gogen.GeneratorContext
+
+	modelType int
 }
 
 // Name returns name of the generator
@@ -53,6 +61,9 @@ func (g *generator) Generate() error {
 			packTmpl.Execute(&content, g)
 			tmpl.Execute(&content, model)
 			g.SaveFile(model.Name, content)
+
+			// set other meta to model
+			model.Package = g.PackageName()
 		}
 	}
 
@@ -64,7 +75,7 @@ var (
 	packageTemplate = `package {{.PackageName}}`
 
 	modelTemplate = `
-		//  {{.Name}} is model representing the entity
+		// {{.Name}} is model representing the entity
 		type {{.Name}} struct {
 		  {{range .Fields}}{{.Name}} {{.Type.Name}}
 		  {{end}}

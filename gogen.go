@@ -8,11 +8,10 @@ var (
 	// set contains every model that was added either
 	// manually or by Define function
 	// @Deprecated
-	Models []*Model
+	//Models []*Model
 
-	// OutputResources will be passed to the first
-	// generator in the pipe
-	OutputResources ResourceContainer
+	// Resources is set resources that were firstly defined
+	Resources ResourceContainer
 
 	// Pipes is set of pipelines that should be run when
 	// generate is called
@@ -21,15 +20,8 @@ var (
 
 // Define will store the defined model for the use in
 // the generators.
-func Define(what interface{}) {
-	switch val := what.(type) {
-	case *Model:
-		Models = append(Models, val)
-		// add model to resources
-		OutputResources.Set(val.Name, val)
-	default:
-		panic("Type passed to define not recognized")
-	}
+func Define(resource interface{}) {
+	Resources = append(Resources, resource)
 }
 
 // Pipe will register new pipe that will be run
@@ -51,6 +43,8 @@ func Generate() error {
 		wg.Add(1)
 		go func(pipe Pipeline) {
 			for _, gen := range pipe.generators {
+				gen.Initialize(&Resources)
+
 				err := gen.Generate()
 				// TODO: make this not panic, but return the error
 				if err != nil {

@@ -11,6 +11,9 @@ import (
 // Generator interface provides interface definition
 // for any generator that can be used within gogen
 type Generator interface {
+	// Initialize is called just before generate to
+	// pass the generator resources that should be used
+	Initialize(resources *ResourceContainer)
 	// Generate is entry point to the generator. This
 	// method is called only once, when the generator
 	// is invoked
@@ -37,12 +40,15 @@ type Generator interface {
 type GeneratorContext struct {
 	// directory to which should all outputs go
 	OutputDir string
-	// InputResources are resources that are passed
-	// from the previous generator
-	InputResources ResourceContainer
-	// OutputResources are resources that will be passed
-	// to the next generator
-	OutputResources ResourceContainer
+	// Resources stores all Resources that were passed
+	// to the current generator context
+	Resources *ResourceContainer
+}
+
+// Initialize accepts resources that should be used by
+// the current generator context
+func (g *GeneratorContext) Initialize(resources *ResourceContainer) {
+	g.Resources = resources
 }
 
 // SetOutputDir will set the output dir of the generator

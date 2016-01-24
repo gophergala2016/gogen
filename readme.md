@@ -1,6 +1,6 @@
 ## Gogen
 
-[![Build Status](https://travis-ci.org/gophergala2016/gogen.svg?branch=master)](https://travis-ci.org/gophergala2016/gogen)
+[![Build Status](https://travis-ci.org/gophergala2016/gogen.svg?branch=master)](https://travis-ci.org/gophergala2016/gogen) [![Godoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://godoc.org/github.com/gophergala2016/gogen)
 
 > Warning: This project is in rapid development
 
@@ -48,7 +48,7 @@ func main() {
 
 This [**configuration file**](https://github.com/gophergala2016/gogen/wiki/Configuration-files) will create new folder `model` in the current working directory, with generated user model file.
 
-## Competition
+## Known integrable generators
 
 - [Swagger](http://swagger.io/)
 - [Goa](http://goa.design/goagen.html)

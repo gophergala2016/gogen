@@ -55,18 +55,20 @@ func (g *RepositoryGenerator) Generate() error {
 		return err
 	}
 
-	for _, model := range gogen.Models {
-		content := bytes.Buffer{}
-		repoTmpl.Execute(&content,
-			struct {
-				*gogen.Model
-				PackageName string
-			}{
-				Model:       model,
-				PackageName: g.PackageName(),
-			},
-		)
-		g.SaveFile(model.Name+"Repository", content)
+	for _, resource := range *g.Resources {
+		if model, ok := resource.(*gogen.Model); ok {
+			content := bytes.Buffer{}
+			repoTmpl.Execute(&content,
+				struct {
+					*gogen.Model
+					PackageName string
+				}{
+					Model:       model,
+					PackageName: g.PackageName(),
+				},
+			)
+			g.SaveFile(model.Name+"Repository", content)
+		}
 	}
 
 	return nil

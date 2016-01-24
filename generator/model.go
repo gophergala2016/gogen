@@ -38,11 +38,13 @@ func (g *ModelGenerator) Generate() error {
 		return err
 	}
 
-	for _, model := range gogen.Models {
-		content := bytes.Buffer{}
-		packTmpl.Execute(&content, g)
-		tmpl.Execute(&content, model)
-		g.SaveFile(model.Name, content)
+	for _, resource := range *g.Resources {
+		if model, ok := resource.(*gogen.Model); ok {
+			content := bytes.Buffer{}
+			packTmpl.Execute(&content, g)
+			tmpl.Execute(&content, model)
+			g.SaveFile(model.Name, content)
+		}
 	}
 
 	return nil

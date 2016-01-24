@@ -1,12 +1,12 @@
 ## Gogen
 
-> This project is in rapid development
+> Warning: This project is in rapid development
 
 Gogen is lightweight [**resourceful code generator library**](https://github.com/gophergala2016/gogen/wiki) written entirely in Go. It is based on resource definitions, pipes and executable configuration files.
 
 ## Kickstart
 
-To start with Gogen, we'll need resources(models, api schemes, app blueprints, ...) and generators that should be used to generate results. We'll then mix everything in one or more configuration files, that will allow us to generate code.
+To start with Gogen, we'll need resources(models, api schemes, blueprints, ...) and generators that should be used to generate results. We'll then mix everything in one or more configuration files, that will allow us to generate code.
 
 Let's start by creating `config.go` file with already existing resources and generators.
 
@@ -45,3 +45,8 @@ func main() {
 ```
 
 This [**configuration file**](https://github.com/gophergala2016/gogen/wiki/Configuration-files) will create new folder `model` in the current working directory, with generated user model file.
+
+## Competition
+
+- [Swagger](http://swagger.io/)
+- [Goa](http://goa.design/goagen.html)

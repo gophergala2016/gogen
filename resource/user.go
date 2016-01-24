@@ -1,4 +1,4 @@
-package model
+package resource
 
 import "github.com/gophergala2016/gogen"
 

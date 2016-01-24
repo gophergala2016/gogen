@@ -2,7 +2,7 @@
 
 > This project is in rapid development
 
-Gogen is lightweight *resourceful* code generator library written entirely in Go. It is based on resource definitions, pipes and executable configuration files.
+Gogen is lightweight [**resourceful code generator library**](https://github.com/gophergala2016/gogen/wiki) written entirely in Go. It is based on resource definitions, pipes and executable configuration files.
 
 ## Kickstart
 
@@ -44,6 +44,4 @@ func main() {
 }
 ```
 
-This *configuration file* will create new folder *model* in the current working directory, with generated user model file.
-
-The more generators and resources will be used, the more code will be generated.
+This [**configuration file**](https://github.com/gophergala2016/gogen/wiki/Configuration-files) will create new folder `model` in the current working directory, with generated user model file.

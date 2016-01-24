@@ -7,7 +7,12 @@ var (
 	// by the Gogen, so generators can use it. This
 	// set contains every model that was added either
 	// manually or by Define function
+	// @Deprecated
 	Models []*Model
+
+	// OutputResources will be passed to the first
+	// generator in the pipe
+	OutputResources ResourceContainer
 
 	// Pipes is set of pipelines that should be run when
 	// generate is called
@@ -20,6 +25,8 @@ func Define(what interface{}) {
 	switch val := what.(type) {
 	case *Model:
 		Models = append(Models, val)
+		// add model to resources
+		OutputResources.Set(val.Name, val)
 	default:
 		panic("Type passed to define not recognized")
 	}

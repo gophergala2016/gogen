@@ -39,10 +39,10 @@ type GeneratorContext struct {
 	OutputDir string
 	// InputResources are resources that are passed
 	// from the previous generator
-	InputResources map[string]interface{}
+	InputResources ResourceContainer
 	// OutputResources are resources that will be passed
 	// to the next generator
-	OutputResources map[string]interface{}
+	OutputResources ResourceContainer
 }
 
 // SetOutputDir will set the output dir of the generator
@@ -50,17 +50,6 @@ type GeneratorContext struct {
 // generated to the destination
 func (g *GeneratorContext) SetOutputDir(dir string) {
 	g.OutputDir = dir
-}
-
-// SetResource will set the output resource to the given
-// value. This will allow next generator to get the resources
-func (g *GeneratorContext) SetResource(name string, v interface{}) {
-	g.OutputResources[name] = v
-}
-
-// GetResource gets resource set by the previous generator
-func (g *GeneratorContext) GetResource(name string) interface{} {
-	return g.InputResources[name]
 }
 
 // Name is virtual method that should return the

@@ -1,14 +1,14 @@
 package resource
 
-import "github.com/gophergala2016/gogen"
+import "github.com/gophergala2016/gogen/generator-model"
 
 // Feedback is model for the feedback entity
-var Feedback = &gogen.Model{
+var Feedback = &model.Model{
 	Name: "Feedback",
-	Fields: []gogen.Field{
+	Fields: []model.Field{
 		{
 			Name: "Description",
-			Type: gogen.String,
+			Type: model.String,
 		},
 	},
 }

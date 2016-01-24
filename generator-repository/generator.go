@@ -1,16 +1,20 @@
-package generator
+package repository
 
 import (
 	"bytes"
 	"text/template"
 
 	"github.com/gophergala2016/gogen"
-	"github.com/gophergala2016/gogen/generator/repositorytmpl"
+	"github.com/gophergala2016/gogen/generator-model"
+	"github.com/gophergala2016/gogen/generator-repository/tmpl"
+	"github.com/op/go-logging"
 )
 
 var (
-	// Repository is global registration of the generator
-	Repository = &RepositoryGenerator{}
+	// Generator is global registration of the generator
+	Generator = &generator{}
+
+	genlog = logging.MustGetLogger("gogen")
 )
 
 // Repository types that can be used
@@ -20,28 +24,28 @@ const (
 	RedisRepository
 )
 
-// RepositoryGenerator encapsulates the logic behind
+// generator encapsulates the logic behind
 // generating of models
-type RepositoryGenerator struct {
+type generator struct {
 	gogen.GeneratorContext
 
 	repositoryType int
 }
 
 // Name returns name of the generator
-func (g *RepositoryGenerator) Name() string {
+func (g *generator) Name() string {
 	return "RepositoryGenerator"
 }
 
 // SetRepositoryType will set the type of the generated
 // repository. Defaults to Mongo
-func (g *RepositoryGenerator) SetRepositoryType(t int) {
+func (g *generator) SetRepositoryType(t int) {
 	g.repositoryType = t
 }
 
 // Generate will call the generator to generate
 // results
-func (g *RepositoryGenerator) Generate() error {
+func (g *generator) Generate() error {
 	err := g.Prepare()
 	if err != nil {
 		return err
@@ -61,19 +65,19 @@ func (g *RepositoryGenerator) Generate() error {
 	}
 
 	for _, resource := range *g.Resources {
-		if model, ok := resource.(*gogen.Model); ok {
-			genlog.Info("Generating repository for model %s", model.Name)
+		if entity, ok := resource.(*model.Model); ok {
+			genlog.Info("Generating repository for model %s", entity.Name)
 			content := bytes.Buffer{}
 			repoTmpl.Execute(&content,
 				struct {
-					*gogen.Model
+					*model.Model
 					PackageName string
 				}{
-					Model:       model,
+					Model:       entity,
 					PackageName: g.PackageName(),
 				},
 			)
-			g.SaveFile(model.Name+"Repository", content)
+			g.SaveFile(entity.Name+"Repository", content)
 		}
 	}
 

@@ -1,22 +1,22 @@
 package resource
 
-import "github.com/gophergala2016/gogen"
+import "github.com/gophergala2016/gogen/generator-model"
 
 // User is entity definition for the user
-var User = &gogen.Model{
+var User = &model.Model{
 	Name: "User",
-	Fields: []gogen.Field{
+	Fields: []model.Field{
 		{
 			Name: "Username",
-			Type: gogen.String,
+			Type: model.String,
 		},
 		{
 			Name: "Password",
-			Type: gogen.String,
+			Type: model.String,
 		},
 		{
 			Name: "Email",
-			Type: gogen.String,
+			Type: model.String,
 		},
 	},
 }

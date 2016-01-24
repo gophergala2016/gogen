@@ -1,4 +1,4 @@
-package generator
+package model
 
 import (
 	"bytes"
@@ -9,26 +9,26 @@ import (
 )
 
 var (
-	// Model is global registration of the generator
-	Model = &ModelGenerator{}
+	// Generator is global registration of the generator
+	Generator = &generator{}
 
 	genlog = logging.MustGetLogger("gogen")
 )
 
 // ModelGenerator encapsulates the logic behind
 // generating of models
-type ModelGenerator struct {
+type generator struct {
 	gogen.GeneratorContext
 }
 
 // Name returns name of the generator
-func (g *ModelGenerator) Name() string {
+func (g *generator) Name() string {
 	return "ModelGenerator"
 }
 
 // Generate will call the generator to generate
 // results
-func (g *ModelGenerator) Generate() error {
+func (g *generator) Generate() error {
 	err := g.Prepare()
 	if err != nil {
 		return err
@@ -47,7 +47,7 @@ func (g *ModelGenerator) Generate() error {
 	}
 
 	for _, resource := range *g.Resources {
-		if model, ok := resource.(*gogen.Model); ok {
+		if model, ok := resource.(*Model); ok {
 			genlog.Info("Generating model for %s", model.Name)
 			content := bytes.Buffer{}
 			packTmpl.Execute(&content, g)
